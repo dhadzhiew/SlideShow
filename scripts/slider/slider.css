@@ -1,0 +1,80 @@
+@font-face {
+    font-family: GlyphIcons;
+    src: url('glyphicons-halflings-regular.ttf');
+}
+
+#slider{
+    width: 600px;
+    background: #333;
+    border-radius: 10px 0px;
+    border-bottom: 10px solid #222;
+    box-sizing: border-box;
+    padding: 20px;
+}
+#slider .slidesContainer{
+    position:relative;
+    width: 100%;
+    overflow:hidden;
+    height:400px;
+}
+#slider .slide{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 5px;
+    position: absolute;
+    display: block;
+    height: 400px;
+}
+#slider .slide img{
+    max-width: 100%;
+    max-height: 330px;
+}
+#slider .slide h3{
+    font-family: Calibri;
+    color: #FEC343;
+    font-size: 25pt;
+    margin:0 0 15px 0;
+}
+#slider .slide p{
+    font-family: Calibri;
+    margin: 0;
+    font-size: 11pt;
+    color: #ccc;
+}
+#slider .nextSlideButton, .prevSlideButton{
+    float:right;
+    position: absolute;
+    background: rgba(0,0,0, 0.5);
+    padding: 15px 17px;
+    font-family: GlyphIcons;
+    font-size:15pt;
+    -webkit-transition: background 0.3s;
+    -moz-transition: background 0.3s;
+    -ms-transition: background 0.3s;
+    -o-transition: background 0.3s;
+    transition: background 0.3s;
+    border-radius: 50%;
+    cursor: pointer;
+    color: #fff;
+}
+#slider .nextSlideButton:hover, .prevSlideButton:hover{
+    background: rgba(0,0,0, 0.7);
+    -webkit-transition: background 0.3s;
+    -moz-transition: background 0.3s;
+    -ms-transition: background 0.3s;
+    -o-transition: background 0.3s;
+    transition: background 0.3s;
+}
+#slider .nextSlideButton{
+     right: 20px;
+}
+#slider .nextSlideButton:before{
+    content: '\e080';
+}
+#slider .prevSlideButton:before{
+    content: '\e079';
+}
+#slider .prevSlideButton{
+    left: 20px;
+    z-index: 5;
+}
