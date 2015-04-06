@@ -8,13 +8,14 @@ var SlideShow = (function () {
         this._$slides = this._$slidesContainer.children('.' + this.config.slidesClass);
         this._currentSlideIndex = this.config.startFromIndex;
         this._$slides.hide();
-        this.showSlide(this.getCurrentSlide(), true);
-        this.setControlPosition();
-        setEvents.call(this);
         this._autoSlideShow = autoSlideShow;
         if(autoSlideShow && autoSlideShow.auto == true){
             startSlideShow.call(this);
         }
+        this.showSlide(this.getCurrentSlide(), true);
+        this.setControlPosition();
+        this._loader = $('#loader')[0];
+        setEvents.call(this);
     }
 
     SlideShow.prototype.showNextSlide = function showNextSlide() {
@@ -146,17 +147,49 @@ var SlideShow = (function () {
             _this.showPrevSlide();
         });
         $sliderDiv.on('mouseenter', function () {
-            prevSlideBtn.fadeIn(200);
-            nextSlideBtn.fadeIn(200);
+            prevSlideBtn.stop().fadeIn(200);
+            nextSlideBtn.stop().fadeIn(200);
             clearInterval(_this._slideShowHolder);
         });
         $sliderDiv.on('mouseleave', function () {
-            prevSlideBtn.fadeOut(200);
-            nextSlideBtn.fadeOut(200);
+            prevSlideBtn.stop().fadeOut(200);
+            nextSlideBtn.stop().fadeOut(200);
             if(_this._autoSlideShow && _this._autoSlideShow.auto == true){
                 startSlideShow.call(_this);
             }
         });
+    }
+
+    function loader(time, canvas, color){
+        var angle = 0,
+            ctx = canvas.getContext('2d'),
+            interval,
+            segmentation = 16;
+
+        function drawCircle(ctx, angle){
+            var startFrom = startFrom || 90,
+                canvasCenter = canvas.width/2;
+            ctx.beginPath();
+            ctx.arc(canvasCenter, canvasCenter, 20, -degToRad(startFrom), degToRad(angle - startFrom));
+            ctx.lineWidth = 10;
+            ctx.strokeStyle = color;
+            ctx.stroke();
+            ctx.closePath();
+        }
+
+        function degToRad(deg){
+            return Math.PI / 180 * deg;
+        }
+
+        interval = setInterval(function(){
+            ctx.clearRect(0,0, canvas.width, canvas.height);
+            drawCircle(ctx, angle, 20);
+            if(angle < 360){
+                angle = (angle + 360 / (time / segmentation))
+            }else{
+                clearInterval(interval);
+            }
+        }, segmentation);
     }
 
     return SlideShow;
